@@ -1,16 +1,19 @@
 import java.math.BigDecimal;
 
-public class Product {
+public abstract class Product {
     private static final String NAME = "StockFlow";
+    private static int numProducts = 0;
     private long id;
     private String name;
     private String sku;
     private BigDecimal purchasePrice;
     private BigDecimal sellingPrice;
     private int quantity;
+    private String brand;
 
-    public Product(long id, String name, String sku, BigDecimal purchasePrice, BigDecimal sellingPrice, int quantity){
+    public Product(long id, String name, String sku, BigDecimal purchasePrice, BigDecimal sellingPrice, int quantity, String brand){
         this.id = id;
+        numProducts += 1;
         if (name == null || name.isBlank()){
             throw new IllegalArgumentException("Product name cannot be empty.");
         }
@@ -31,6 +34,7 @@ public class Product {
             throw new IllegalArgumentException("Quantity cannot be negative.");
         }
         this.quantity = quantity;
+        this.brand = brand;
     }
 
     public static String getSoftwareName(){
@@ -59,6 +63,14 @@ public class Product {
 
     public int getQuantity(){
         return quantity;
+    }
+
+    public static int getNumProducts(){
+        return numProducts;
+    }
+
+    public String getBrand(){
+        return brand;
     }
 
     public void setName(String name){
@@ -104,4 +116,7 @@ public class Product {
                 + "Selling price: " + sellingPrice + "\n"
                 + "Quantity: " + quantity;
     }
+
+    public abstract void printRecipe();
+
 }
